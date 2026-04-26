@@ -1,26 +1,66 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Base ─────────────────────────────────────── */
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-ocean-darkest text-ocean-text antialiased overflow-x-hidden;
+  }
+  ::selection {
+    @apply bg-ocean-gold/30 text-white;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Component classes ────────────────────────── */
+@layer components {
+  /* Frosted-glass nav bar */
+  .nav-glass {
+    background: rgba(6, 10, 15, 0.82);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  /* Card with subtle lift on hover */
+  .art-card {
+    @apply bg-ocean-card rounded-xl overflow-hidden
+           border border-ocean-border/60
+           transition-all duration-500 ease-out;
+  }
+  .art-card:hover {
+    @apply border-ocean-gold/30 -translate-y-1;
+    box-shadow: 0 24px 48px -12px rgba(0,0,0,0.6),
+                0 0 0 1px rgba(196,162,101,0.08);
+  }
+
+  /* Modal backdrop */
+  .modal-overlay {
+    @apply fixed inset-0 z-[900] flex items-center justify-center p-4;
+  }
+  .modal-backdrop {
+    background: rgba(6, 10, 15, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .modal-panel {
+    @apply relative z-[910] w-full max-w-md rounded-xl overflow-hidden;
+    background: linear-gradient(165deg, #16202c 0%, #0c1218 100%);
+    border: 1px solid rgba(196,162,101,0.15);
+  }
+
+  /* Gold-accent input */
+  .input-field {
+    @apply w-full rounded-lg py-3 px-4 text-sm text-ocean-text
+           border border-ocean-border/60 bg-ocean-darkest/60
+           placeholder:text-ocean-muted/50
+           focus:outline-none focus:border-ocean-gold/50
+           transition-colors duration-200;
+  }
 }
+
+/* ─── Scrollbar ────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #060a0f; }
+::-webkit-scrollbar-thumb { background: #1e2a38; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #c4a265; }
