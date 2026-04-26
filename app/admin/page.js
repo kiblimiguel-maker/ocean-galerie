@@ -25,7 +25,7 @@ export default function AdminPage() {
         return u;
   }, []);
 
-  const isAdmin = user && user.email === "mxocean@protonmail.com";
+  const isAdmin = user && (user.email === "mxocean@protonmail.com" || user.email === "mxocean@proton.me");
 
   if (loading) return <div className="min-h-screen bg-ocean-darkest flex items-center justify-center text-ocean-gold">Laedt...</div>;
 
