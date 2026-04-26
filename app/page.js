@@ -39,7 +39,7 @@ export default function Home() {
   const [navSolid, setNavSolid] = useState(false);
   const seedDone = useRef(false);
 
-  const localArts = ARTWORKS.map(a => ({ ...a, endTime: Date.now() + a.limit * 864e5, bidsCount: 0 }));
+  const localArts = ARTWORKS.map(a => ({ ...a, endTime: null, bidsCount: 0 }));
   const display = arts.length > 0 ? arts : localArts;
 
   // Clock
@@ -74,7 +74,7 @@ export default function Home() {
         if (snap.empty) {
           for (const a of ARTWORKS) {
             await setDoc(doc(db, "artworks", a.id), {
-              ...a, endTime: Date.now() + a.limit * 864e5, currentBid: null, lastBidder: null, bidsCount: 0,
+              ...a, endTime: null, currentBid: null, lastBidder: null, bidsCount: 0,
             });
           }
         }
@@ -207,7 +207,7 @@ export default function Home() {
                       <span className="bg-black/60 text-ocean-muted text-[10px] uppercase tracking-[0.1em] py-1 px-2.5 rounded border border-white/10">Beendet</span>
                     ) : (
                       <span className={`bg-black/60 text-xs font-mono py-1 px-2.5 rounded border tracking-wider ${urgent ? "text-ocean-red border-ocean-red/60 animate-pulse" : "text-ocean-gold border-ocean-gold/40"}`}>
-                        ⏱ {fmtTime(diff)}
+                        ⏱ {art.bidsCount === 0 ? "10 Tage ab Start" : fmtTime(diff)}
                       </span>
                     )}
                   </div>
