@@ -57,7 +57,7 @@ export default function AdminPage() {
 
         <div className="grid grid-cols-1 gap-6">
   {arts.sort((a,b) => a.id.localeCompare(b.id)).map((art) => {
-                const ended = art.endTime < Date.now();
+                const ended = art.endTime && art.endTime < Date.now();
                 return (
                                 <div key={art.id} className="bg-ocean-card border border-ocean-border/40 rounded-xl p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start md:items-center">
                     <div className="flex-1">
