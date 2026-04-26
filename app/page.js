@@ -193,7 +193,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {display.map((art, i) => {
-            const diff = art.endTime - now, ended = diff <= 0, urgent = diff > 0 && diff < 864e5;
+            const diff = art.endTime - now, ended = art.endTime && (art.endTime - now) <= 0, urgent = diff > 0 && diff < 864e5;
             const bid = art.currentBid || art.startBid;
             return (
               <motion.div key={art.id} initial={{ opacity:0, y:28 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.5, delay:i*0.08 }}
@@ -207,7 +207,7 @@ export default function Home() {
                       <span className="bg-black/60 text-ocean-muted text-[10px] uppercase tracking-[0.1em] py-1 px-2.5 rounded border border-white/10">Beendet</span>
                     ) : (
                       <span className={`bg-black/60 text-xs font-mono py-1 px-2.5 rounded border tracking-wider ${urgent ? "text-ocean-red border-ocean-red/60 animate-pulse" : "text-ocean-gold border-ocean-gold/40"}`}>
-                        ⏱ {art.bidsCount === 0 ? "10 Tage ab Start" : fmtTime(diff)}
+                        ⏱ {!art.endTime ? "10 Tage ab Start" : fmtTime(diff)}
                       </span>
                     )}
                   </div>
